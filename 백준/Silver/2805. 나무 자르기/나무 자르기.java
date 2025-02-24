@@ -27,9 +27,7 @@ public class Main {
 
             long heights = 0;
             for (int tree : trees) {
-                if (tree > mid) {
-                    heights += tree - mid;
-                }
+                heights += Math.max(0, tree - mid);
             }
 
             if (heights >= M) {
