@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Arrays;
 
 public class Main {
 
@@ -20,11 +19,6 @@ public class Main {
 
 
     private static void calculate(int x) {
-        if (x == 2 || x == 3) {
-            dp[x] = 1;
-            return;
-        }
-
         int data = dp[x - 1];
 
         if (x % 2 == 0) {
