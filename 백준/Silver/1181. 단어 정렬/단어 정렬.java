@@ -4,6 +4,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
         int N = Integer.parseInt(br.readLine());
         Set<Word> words = new TreeSet<>();
@@ -13,8 +14,10 @@ public class Main {
         }
 
         for (Word word : words) {
-            System.out.println(word.text);
+            sb.append(word.text).append("\n");
         }
+
+        System.out.println(sb);
     }
 
 
