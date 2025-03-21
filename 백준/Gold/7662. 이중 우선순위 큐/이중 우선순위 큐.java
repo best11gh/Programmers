@@ -28,7 +28,7 @@ public class Main {
                 sb.append("EMPTY").append("\n");
             } else {
                 int res = delete(maxHeap);
-                sb.append(res).append(" "); 
+                sb.append(res).append(" ");
                 if (!map.isEmpty()) {
                     res = delete(minHeap);
                 }
@@ -45,40 +45,25 @@ public class Main {
             minHeap.add(num);
             maxHeap.add(num);
             map.put(num, map.getOrDefault(num, 0) + 1);
-        } else {
-            if (map.isEmpty()) {
-                return;
-            }
-
-            if (num == 1) {
-                delete(maxHeap);
-            } else {
-                delete(minHeap);
-            }
+        } else if (!map.isEmpty()) {
+            delete(num == 1 ? maxHeap : minHeap);
         }
-
-
     }
 
 
     private static int delete(PriorityQueue<Integer> queue) {
-        int res = 0;
-
         while (!queue.isEmpty()) {
-            res = queue.poll();
-
-            int cnt = map.getOrDefault(res, 0);
-            if (cnt == 0) {
-                continue;
+            int num = queue.poll();
+            if (map.containsKey(num)) {
+                int cnt = map.getOrDefault(num, 0);
+                if (cnt == 1) {
+                    map.remove(num);
+                } else {
+                    map.put(num, cnt - 1);
+                }
+                return num;
             }
-            if (cnt == 1) {
-                map.remove(res);
-            } else {
-                map.put(res, cnt - 1);
-            }
-            break;
         }
-
-        return res;
+        return 0;
     }
 }
