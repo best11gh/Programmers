@@ -26,7 +26,6 @@ public class Main {
                 int idx = Integer.parseInt(input);
                 sb.append(num.get(idx)).append("\n");
             } catch (NumberFormatException e) {
-                // TODO: 블로그 글 : +1 한 거 적기
                 sb.append(name.get(input)).append("\n");
             }
         }
