@@ -8,13 +8,14 @@ public class Main {
         int r = 31;
         int M = 1234567891;
 
-        int result = 0;
-
         String line = br.readLine();
+        long result = 0;
+        long pow = 1;
+
         for (int i = 0; i < L; i++) {
-            char str = line.charAt(i);
-            int num = str - 'a' + 1;
-            result += (int) (num * Math.pow(r, i));
+            int num = line.charAt(i) - 'a' + 1;
+            result += num * pow;
+            pow = pow * r % M;
         }
 
         System.out.println(result % M);
