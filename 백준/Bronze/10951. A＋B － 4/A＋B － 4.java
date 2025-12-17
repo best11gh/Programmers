@@ -11,7 +11,6 @@ public class Main {
 
         while ((line = br.readLine()) != null) {
             StringTokenizer st = new StringTokenizer(line);
-            if (st.countTokens() < 2) break;
 
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
