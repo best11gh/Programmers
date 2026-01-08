@@ -7,11 +7,6 @@ public class Main {
 
         int N = Integer.parseInt(br.readLine());
 
-        if (N == 1) {
-            System.out.println(0);
-            return;
-        }
-
         List<Integer> xs = new ArrayList<>();
         List<Integer> ys = new ArrayList<>();
 
