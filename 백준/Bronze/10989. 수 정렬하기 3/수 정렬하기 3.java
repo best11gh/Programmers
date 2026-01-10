@@ -16,10 +16,6 @@ public class Main {
             max = Integer.max(num, max);
         }
 
-        // 1. 최대값 찾기 => 최대값 + 1 크기의 Counting Array 생성 => O(n)
-        // 2. 누적합 배열로 바꾸어준다. => O(n)
-        // 3. 조회된 원소의 개수 1개씩 감소 => 앞의 좌푤르 받을 수 있게 함
-
         int[] countingArr = new int[max];
         for (Integer num : nums) {
             countingArr[num - 1]++;
