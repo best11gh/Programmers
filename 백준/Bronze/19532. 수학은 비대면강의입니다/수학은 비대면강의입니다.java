@@ -13,10 +13,8 @@ public class Main {
         int e = Integer.parseInt(st.nextToken());
         int f = Integer.parseInt(st.nextToken());
 
-        int D = a * e - b * d;
-
-        int x = (c * e - b * f) / D;
-        int y = (a * f - c * d) / D;
+        int x = (c * e - b * f) / (a * e - b * d);
+        int y = (a * f - c * d) / (a * e - b * d);
 
         System.out.println(x + " " + y);
     }
