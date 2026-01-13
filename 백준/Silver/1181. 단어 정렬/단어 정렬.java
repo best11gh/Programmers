@@ -4,38 +4,36 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
         Set<Word> words = new TreeSet<>();
-
         for (int i = 0; i < N; i++) {
             words.add(new Word(br.readLine()));
         }
 
         for (Word word : words) {
-            sb.append(word.text).append("\n");
-        }
+            bw.write(String.valueOf(word.value));
+            bw.newLine();
+        };
 
-        System.out.println(sb);
+        bw.close();
+        br.close();
     }
 
-
     private static class Word implements Comparable<Word> {
-        final String text;
+        String value;
 
-        private Word(String text) {
-            this.text = text;
+        public Word(String value) {
+            this.value = value;
         }
 
         @Override
         public int compareTo(Word o) {
-            if (this.text.length() != o.text.length()){
-                return this.text.length() - o.text.length();
+            if (o.value.length() == this.value.length()) {
+                return this.value.compareTo(o.value);
             }
-            return this.text.compareTo(o.text);
+            return this.value.length() - o.value.length();
         }
-
-
     }
 }
