@@ -4,33 +4,37 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuilder sb = new StringBuilder();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        HashSet<String> notHeard = new HashSet<>();
-
+        Set<String> notHeard = new HashSet<>();
         for (int i = 0; i < N; i++) {
             notHeard.add(br.readLine());
         }
 
-        ArrayList<String> result = new ArrayList<>();
+
+        List<String> notHeardAndSeen = new ArrayList<>();
         for (int i = 0; i < M; i++) {
-            String notSeen = br.readLine();
-            if (notHeard.contains(notSeen)){
-                result.add(notSeen);
+            String name = br.readLine();
+            if (notHeard.contains(name)) {
+                notHeardAndSeen.add(name);
             }
         }
 
-        Collections.sort(result);
+        bw.write(Integer.toString(notHeardAndSeen.size()));
+        bw.newLine();
 
-        sb.append(result.size() + "\n");
-        for (String name : result) {
-            sb.append(name).append("\n");
+        Collections.sort(notHeardAndSeen);
+        
+        for (String name : notHeardAndSeen) {
+            bw.write(name);
+            bw.newLine();
         }
 
-        System.out.println(sb);
+        br.close();
+        bw.close();
     }
 }
