@@ -1,47 +1,40 @@
 import java.io.*;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         StringBuilder sb = new StringBuilder();
 
-        while (true) {
-            String str = br.readLine();
-            if (str.equals(".")) {
-                break;
-            }
-
-            sb.append(getAnswer(str)).append("\n");
+        String line;
+        while (!(line = br.readLine()).equals(".")) {
+            sb.append(checkVps(line) ? "yes" : "no").append("\n");
         }
 
-        System.out.println(sb);
-
-
+        System.out.print(sb);
     }
 
+    private static boolean checkVps(String line) {
+        Deque<Character> stack = new ArrayDeque<>();
 
-    private static String getAnswer(String str) {
-        Stack<Character> stack = new Stack<>();
+        for (char ch : line.toCharArray()) {
+            if (ch == '(' || ch == '[') {
+                stack.push(ch);
+                continue;
+            }
 
-        for (char c : str.toCharArray()) {
-            if (c == '(' || c == '[') {
-                stack.push(c);
-            } else if (c == ')' || c == ']') {
+            if (ch == ')' || ch == ']') {
                 if (stack.isEmpty()) {
-                    return "no";
+                    return false;
                 }
 
-                if ((stack.peek() == '(' && c == ')') || (stack.peek() == '[' && c == ']')) {
-                    stack.pop();
-                } else {
-                    return "no";
+                char expected = (ch == ')') ? '(' : '[';
+                if (stack.pop() != expected) {
+                    return false;
                 }
             }
         }
 
-        return stack.isEmpty() ? "yes" : "no";
+        return stack.isEmpty();
     }
 }
