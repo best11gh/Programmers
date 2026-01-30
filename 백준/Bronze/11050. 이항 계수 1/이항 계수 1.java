@@ -1,30 +1,24 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        br.close();
-        
-        bw.write(binomialCoefficient(N, K) + "\n");
-        bw.flush();
-        bw.close();
+
+        int result = factorial(N) / (factorial(K) * factorial(N - K));
+        System.out.println(result);
     }
 
-    private static int binomialCoefficient(int N, int K) {
-        if (N == 0 || K == 0 || N == K) {
-            return 1;
-        }
 
-        return binomialCoefficient(N - 1, K - 1) + binomialCoefficient(N - 1, K);
+    private static int factorial(int num) {
+        int result = 1;
+        for (int i = 1; i <= num; i++) {
+            result *= i;
+        }
+        return result;
     }
 }
