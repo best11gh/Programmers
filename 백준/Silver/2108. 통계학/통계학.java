@@ -1,56 +1,58 @@
 import java.io.*;
-import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N];
-        int[] count = new int[8001]; 
-        
+        int[] nums = new int[8001];
+
         int sum = 0;
-        int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
 
         for (int i = 0; i < N; i++) {
             int num = Integer.parseInt(br.readLine());
-            arr[i] = num;
             sum += num;
-            count[num + 4000]++; 
-            max = Math.max(max, num);
-            min = Math.min(min, num);
+            nums[num + 4000] += 1;
+
+            max = Integer.max(num, max);
+            min = Integer.min(num, min);
         }
 
-        int avg = (int) Math.round((double) sum / N);
-        bw.write(avg + "\n");
+        int mean = (int) Math.round((double) sum / N);
+        int range = max - min;
 
-        Arrays.sort(arr);
-        int median = arr[N / 2];
-        bw.write(median + "\n");
+        int median = 0;
+        int count = 0;
 
         int mode = 0;
         int modeMax = 0;
-        boolean second = false; 
+        boolean flag = false;
 
-        for (int i = 0; i < 8001; i++) {
-            if (count[i] > modeMax) {
-                modeMax = count[i];
+        for (int i = min + 4000; i <= max + 4000; i++) {
+            if (nums[i] <= 0) {
+                continue;
+            }
+
+            if (count < (N + 1) / 2) {
+                count += nums[i];
+                median = i - 4000;
+            }
+
+            if (modeMax < nums[i]) {
+                modeMax = nums[i];
                 mode = i - 4000;
-                second = false; 
-            } else if (count[i] == modeMax && !second) {
+                flag = true;
+            } else if (modeMax == nums[i] && flag) {
                 mode = i - 4000;
-                second = true; 
+                flag = false;
             }
         }
-        bw.write(mode + "\n");
 
-        int range = max - min;
-        bw.write(range + "\n");
-
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(mean);
+        System.out.println(median);
+        System.out.println(mode);
+        System.out.println(range);
     }
 }
