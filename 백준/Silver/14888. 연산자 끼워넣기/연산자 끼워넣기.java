@@ -4,7 +4,6 @@ import java.util.*;
 public class Main {
 
     private static int N;
-    private static int result;
 
     private static int[] arr;
     private static int[] oper;
@@ -27,52 +26,42 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             oper[i] = Integer.parseInt(st.nextToken());
         }
-
-        result = arr[0];
-        dfs(1);
+        
+        dfs(1, arr[0]);
 
         System.out.println(max);
         System.out.println(min);
     }
-    
-    private static void dfs(int idx) {
+
+    private static void dfs(int idx, int value) {
         if (idx == N) {
-            max = Integer.max(max, result);
-            min = Integer.min(min, result);
+            max = Integer.max(max, value);
+            min = Integer.min(min, value);
             return;
         }
 
         int num = arr[idx];
 
         for (int i = 0; i < 4; i++) {
-            if (oper[i] != 0) {
-                int prev = result;
-
-                calculate(num, i);
-                oper[i] -= 1;
-
-                dfs(idx + 1);
-                
-                result = prev;
-                oper[i] += 1;
+            if (oper[i] > 0) {
+                oper[i]--;
+                dfs(idx + 1, calculate(value, num, i));
+                oper[i]++;
             }
         }
     }
 
-    private static void calculate(int num, int operator) {
+    private static int calculate(int a, int b, int operator) {
         switch (operator) {
             case 0:
-                result += num;
-                break;
+                return a + b;
             case 1:
-                result -= num;
-                break;
+                return a - b;
             case 2:
-                result *= num;
-                break;
+                return a * b;
             case 3:
-                result /= num;
-                break;
+                return a / b;
         }
+        return 0;
     }
 }
