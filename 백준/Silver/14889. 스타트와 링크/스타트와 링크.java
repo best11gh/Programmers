@@ -7,7 +7,7 @@ public class Main {
     private static int result = Integer.MAX_VALUE;
 
     private static int[][] arr;
-    private static List<Integer> selected = new ArrayList<>();
+    private static boolean[] selected;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,6 +15,7 @@ public class Main {
         N = Integer.parseInt(br.readLine());
 
         arr = new int[N][N];
+        selected = new boolean[N];
 
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -31,33 +32,31 @@ public class Main {
 
     private static void dfs(int cnt, int start) {
         if (cnt == N / 2) {
-            List<Integer> non = new ArrayList<>();
-            for (int i = 0; i < N; i++) {
-                if (!selected.contains(i)) {
-                    non.add(i);
-                }
-            }
-            result = Math.min(result, Math.abs(calculate(selected) - calculate(non)));
+            calculate();
             return;
         }
 
         for (int i = start; i < N; i++) {
-            selected.add(i);
+            selected[i] = true;
             dfs(cnt + 1, i + 1);
-            selected.remove(selected.size() - 1);
+            selected[i] = false;
         }
     }
 
-    private static int calculate(List<Integer> selected) {
-        int result = 0;
+    private static void calculate() {
+        int startT = 0;
+        int linkT = 0;
 
-        for (int i = 0; i < selected.size(); i++) {
-            int x = selected.get(i);
-            for (int j = i; j < selected.size(); j++) {
-                int y = selected.get(j);
-                result += arr[x][y] + arr[y][x];
+        for (int i = 0; i < N; i++) {
+            for (int j = i; j < N; j++) {
+                if (selected[i] && selected[j]) {
+                    startT += arr[i][j] + arr[j][i];
+                } else if (!selected[i] && !selected[j]) {
+                    linkT += arr[i][j] + arr[j][i];
+                }
             }
         }
-        return result;
+
+        result = Math.min(result, Math.abs(startT - linkT));
     }
 }
