@@ -18,17 +18,10 @@ public class Main {
 
         for (int i = 1; i < n; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (j == 0) {
-                    arr[i][j] += arr[i - 1][j];
-                    continue;
-                }
+                int left = j > 0 ? arr[i - 1][j - 1] : 0;
+                int right = j < i ? arr[i - 1][j] : 0;
 
-                if (j == arr[i].length - 1) {
-                    arr[i][j] += arr[i - 1][j - 1];
-                    continue;
-                }
-
-                arr[i][j] += Math.max(arr[i - 1][j], arr[i - 1][j - 1]);
+                arr[i][j] += Math.max(left, right);
             }
         }
 
