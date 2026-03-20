@@ -6,28 +6,27 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         int N = Integer.parseInt(br.readLine());
         dp = new int[N + 1];
-        for (int i = 2; i < N + 1; i++) {
-            calculate(i);
-        }
+
+        calculate(N);
 
         System.out.println(dp[N]);
-
     }
 
+    private static void calculate(int n) {
+        dp[1] = 0;
 
-    private static void calculate(int x) {
-        int data = dp[x - 1];
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + 1;
 
-        if (x % 2 == 0) {
-            data = Math.min(dp[x / 2], data);
+            if (i % 3 == 0) {
+                dp[i] = Math.min(dp[i / 3] + 1, dp[i]);
+            }
+
+            if (i % 2 == 0) {
+                dp[i] = Math.min(dp[i / 2] + 1, dp[i]);
+            }
         }
-
-        if (x % 3 == 0) {
-            data = Math.min(dp[x / 3], data);
-        }
-        dp[x] = data + 1;
     }
 }
