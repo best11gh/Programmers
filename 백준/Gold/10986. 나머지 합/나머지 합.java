@@ -10,19 +10,19 @@ public class Main {
         int M = Integer.parseInt(st.nextToken());
 
         long[] remain = new long[M];
+        remain[0] = 1;
+
         long sum = 0;
+        long result = 0;
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             sum += Long.parseLong(st.nextToken());
-            remain[(int) (sum % M)]++;
-        }
 
-        long result = 0;
-        result += remain[0];
+            int mod = (int) (sum % M);
 
-        for (int i = 0; i < M; i++) {
-            result += remain[i] * (remain[i] - 1) / 2;
+            result += remain[mod];
+            remain[mod]++;
         }
 
         System.out.println(result);
