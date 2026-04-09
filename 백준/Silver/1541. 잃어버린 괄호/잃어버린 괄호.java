@@ -1,30 +1,25 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String line = br.readLine() + "+";
+        String[] minusSplit = br.readLine().split("-");
 
         int result = 0;
-        boolean plus = true;
-        StringBuilder num = new StringBuilder();
+        for (int i = 0; i < minusSplit.length; i++) {
+            String[] plusSplit = minusSplit[i].split("\\+");
 
-        for (int i = 0; i < line.length(); i++) {
-            char ch = line.charAt(i);
+            int sum = 0;
+            for (String num : plusSplit) {
+                sum += Integer.parseInt(num);
+            }
 
-            if (ch == '+' || ch == '-') {
-                if (plus) {
-                    result += Integer.parseInt(num.toString());
-                } else {
-                    result -= Integer.parseInt(num.toString());
-                }
-
-                num.setLength(0);
-                if (ch == '-') {
-                    plus = false;
-                }
+            if (i == 0) {
+                result += sum;
             } else {
-                num.append(ch);
+                result -= sum;
             }
         }
 
