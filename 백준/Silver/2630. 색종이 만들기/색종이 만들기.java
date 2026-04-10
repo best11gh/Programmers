@@ -1,70 +1,57 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 
-    public static int whiteCount = 0;
-    public static int blueCount = 0;
-    public static int[][] paper;
+    private static int[][] arr;
+    private static int white = 0;
+    private static int blue = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-        paper = new int[N][N];
+        arr = new int[N][N];
 
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
-                paper[i][j] = Integer.parseInt(st.nextToken());
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        divideAndCount(N, 0, 0);
+        paint(0, 0, N);
 
-        bw.write(whiteCount + "\n");
-        bw.write(blueCount + "\n");
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(white);
+        System.out.println(blue);
     }
 
-    public static void divideAndCount(int size, int row, int col) {
-        if (countColor(size, row, col)) {
+    private static void paint(int x, int y, int length) {
+        if (isSame(x, y, length)) {
+            if (arr[x][y] == 0) {
+                white++;
+            } else {
+                blue++;
+            }
             return;
         }
 
-        int newSize = size / 2;
-        divideAndCount(newSize, row, col);
-        divideAndCount(newSize, row + newSize, col);
-        divideAndCount(newSize, row, col + newSize);
-        divideAndCount(newSize, row + newSize, col + newSize);
+        int half = length / 2;
+        paint(x, y, half);
+        paint(x + half, y, half);
+        paint(x, y + half, half);
+        paint(x + half, y + half, half);
     }
 
-
-    public static boolean countColor(int size, int row, int col) {
-        int color = paper[row][col];
-
-        for (int i = row; i < row + size; i++) {
-            for (int j = col; j < col + size; j++) {
-                if (color != paper[i][j]) {
+    private static boolean isSame(int x, int y, int length) {
+        int color = arr[x][y];
+        for (int i = x; i < x + length; i++) {
+            for (int j = y; j < y + length; j++) {
+                if (arr[i][j] != color) {
                     return false;
                 }
             }
         }
-
-        if (color == 0) {
-            whiteCount++;
-        } else {
-            blueCount++;
-        }
-
         return true;
-
     }
 }
