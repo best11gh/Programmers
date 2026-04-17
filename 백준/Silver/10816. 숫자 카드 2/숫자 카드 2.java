@@ -5,14 +5,15 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        Map<Integer, Integer> own = new HashMap<>();
         int N = Integer.parseInt(br.readLine());
+        int[] arr = new int[N];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            int num = Integer.parseInt(st.nextToken());
-            own.put(num, own.getOrDefault(num, 0) + 1);
+            arr[i] = Integer.parseInt(st.nextToken());
         }
+
+        Arrays.sort(arr);
 
         StringBuilder sb = new StringBuilder();
 
@@ -20,9 +21,44 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
             int num = Integer.parseInt(st.nextToken());
-            sb.append(own.getOrDefault(num, 0)).append(" ");
-        }
 
+            int lowerBound = lowerBound(arr, num);
+            int upperBound = upperBound(arr, num);
+
+            sb.append(upperBound - lowerBound).append(" ");
+        }
         System.out.println(sb);
+    }
+
+    private static int lowerBound(int[] arr, int num) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            if (arr[mid] >= num) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+    private static int upperBound(int[] arr, int num) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            if (arr[mid] > num) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
     }
 }
