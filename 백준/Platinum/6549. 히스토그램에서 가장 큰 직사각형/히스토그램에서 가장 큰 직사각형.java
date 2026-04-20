@@ -16,42 +16,29 @@ public class Main {
                 heights[i] = Integer.parseInt(st.nextToken());
             }
 
-            long area = solve(0, n - 1, heights);
+            long area = solve(heights);
             sb.append(area).append("\n");
         }
         System.out.println(sb);
     }
 
-    private static long solve(int left, int right, int[] heights) {
-        if (left == right) {
-            return heights[left];
-        }
+    private static long solve(int[] heights) {
+        Deque<Integer> stack = new ArrayDeque<>();
+        long maxArea = 0;
+        int n = heights.length;
 
-        int mid = (left + right) / 2;
+        for (int i = 0; i <= n; i++) {
+            int current = (i == n) ? 0 : heights[i];
 
-        long leftMax = solve(left, mid, heights);
-        long rightMax = solve(mid + 1, right, heights);
-        long midMax = getMidArea(left, right, mid, heights);
+            while (!stack.isEmpty() && (heights[stack.peek()] > current)) {
+                int idx = stack.pop();
 
-        return Math.max(Math.max(leftMax, rightMax), midMax);
-    }
+                long width = stack.isEmpty() ? i : i - stack.peek() - 1;
+                long height = heights[idx];
 
-    private static long getMidArea(int left, int right, int mid, int[] heights) {
-        int lo = mid;
-        int hi = mid + 1;
-
-        long height = Math.min(heights[mid], heights[mid + 1]);
-        long maxArea = height * 2;
-
-        while (left < lo || hi < right) {
-            if ((left < lo) && (hi == right || (heights[lo - 1] >= heights[hi + 1]))) {
-                lo--;
-                height = Math.min(height, heights[lo]);
-            } else {
-                hi++;
-                height = Math.min(height, heights[hi]);
+                maxArea = Math.max(maxArea, width * height);
             }
-            maxArea = Math.max(maxArea, height * (hi - lo + 1));
+            stack.push(i);
         }
         return maxArea;
     }
