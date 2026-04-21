@@ -1,46 +1,46 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
+
+    private static int M;
+    private static int[] arr;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int[] trees = new int[N];
 
-        int min = 0;
-        int max = 0;
+        int N = Integer.parseInt(st.nextToken());
+        arr = new int[N];
+        M = Integer.parseInt(st.nextToken());
+
+        long left = 0;
+        long right = 0;
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            trees[i] = Integer.parseInt(st.nextToken());
-            max = Math.max(max, trees[i]);
+            arr[i] = Integer.parseInt(st.nextToken());
+            right = Math.max(right, arr[i]);
         }
 
-        int result = 0;
+        while (left <= right) {
+            long mid = (left + right) / 2;
 
-        while (min <= max) {
-            int mid = (min + max) / 2;
-
-            long heights = 0;
-            for (int tree : trees) {
-                heights += Math.max(0, tree - mid);
-            }
-
-            if (heights >= M) {
-                result = mid;
-                min = mid + 1;
+            if (canCut(mid)) {
+                left = mid + 1;
             } else {
-                max = mid - 1;
+                right = mid - 1;
             }
         }
 
-        bw.write(result + "\n");
-        bw.flush();
-        bw.close();
-        br.close();
+        System.out.println(right);
+    }
+
+    private static boolean canCut(long height) {
+        long total = 0;
+        for (int tree : arr) {
+            total += Math.max(tree - height, 0);
+        }
+        return total >= M;
     }
 }
