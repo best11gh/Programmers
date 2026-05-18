@@ -14,19 +14,19 @@ class Solution
 		{
             int tc = sc.nextInt();
             
-            Map<Integer, Integer> map = new HashMap<>();
+            int[] count = new int[101];
+            
             for (int i = 0; i < 1000; i++) {
                 int num = sc.nextInt();
-                map.put(num, map.getOrDefault(num, 0) + 1);
+               count[num]++;
             }
 
             int maxCnt = 0;
             int mode = 0;
 
             for (int i = 0; i <= 100; i++) {
-                int count = map.getOrDefault(i, 0);
-                if (count >= maxCnt) {
-                    maxCnt = count;
+                if (count[i] >= maxCnt) {
+                    maxCnt = count[i];
                     mode = i;
                 }
             }
