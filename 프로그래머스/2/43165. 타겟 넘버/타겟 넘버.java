@@ -2,38 +2,29 @@ class Solution {
     
     private static int[] numbers;
     private static int target;
-    private static int result; // 만들어지는 숫자
-    private static int answer; // 방법의 수
+    private static int answer; 
     
     public int solution(int[] nums, int tg) {
         numbers = nums;
         target = tg;
-        result = 0;
         answer = 0;
- 
         
-        dfs(0);
+        dfs(0, 0);
         return answer;
     }
     
-    private static void dfs(int cnt) {
-        if (cnt == numbers.length) {
-            if (result == target) {
+    private static void dfs(int idx, int sum) {
+        if (idx == numbers.length) {
+            if (sum == target) {
                 answer++;
             }
             return;
         }
         
         
-        int num = numbers[cnt];
+        int num = numbers[idx];
 
-        result += num;
-        dfs(cnt+1);
-            
-
-        result -= (num * 2);
-        dfs(cnt + 1);
-            
-        result += num;
+        dfs(idx + 1, sum + num);
+        dfs(idx + 1, sum - num);
     }
 }
