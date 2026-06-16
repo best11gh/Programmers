@@ -3,17 +3,15 @@ class Solution {
         List<String> answer = new ArrayList<>();
 
         for (int i = 1; i <= n; i++) {
-            String result = "";
-
-            if (i % 3 == 0) {
-                result += "Fizz";
+            if (i % 3 == 0 && i % 5 == 0) {
+                answer.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                answer.add("Fizz");
+            } else if (i % 5 == 0) {
+                answer.add("Buzz");
+            } else {
+                answer.add(Integer.toString(i));
             }
-
-            if (i % 5 == 0) {
-                result += "Buzz";
-            }
-
-            answer.add(result.isEmpty() ? String.valueOf(i) : result);
         }
 
         return answer;
